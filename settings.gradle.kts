@@ -3,3 +3,8 @@ plugins {
 }
 rootProject.name = "skr"
 include("report_spec")
+include("CSVImpl")
+include("TXTImpl")
+include("PDFImpl")
+include("XLSXImpl")
+include("teeestApp")

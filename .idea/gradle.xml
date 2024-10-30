@@ -9,7 +9,12 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/CSVImpl" />
+            <option value="$PROJECT_DIR$/PDFImpl" />
+            <option value="$PROJECT_DIR$/TXTImpl" />
+            <option value="$PROJECT_DIR$/XLSXImpl" />
             <option value="$PROJECT_DIR$/report_spec" />
+            <option value="$PROJECT_DIR$/teeestApp" />
           </set>
         </option>
       </GradleProjectSettings>
