@@ -12,7 +12,7 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":report_spec"))
+    implementation(project(":spec"))
     testImplementation(kotlin("test"))
 }
 

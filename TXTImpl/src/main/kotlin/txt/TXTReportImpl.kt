@@ -1,7 +1,7 @@
 package txt
 
-import org.example.model.FormatName
-import org.example.spec.ReportGeneratorInterface
+import model.FormatName
+import spec.ReportGeneratorInterface
 import java.io.File
 
 class TXTReportImpl : ReportGeneratorInterface {

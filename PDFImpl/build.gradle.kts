@@ -13,7 +13,7 @@ repositories {
 
 dependencies {
     implementation("com.github.librepdf:openpdf:1.3.29")
-    implementation(project(":report_spec"))
+    implementation(project(":spec"))
     testImplementation(kotlin("test"))
 }
 

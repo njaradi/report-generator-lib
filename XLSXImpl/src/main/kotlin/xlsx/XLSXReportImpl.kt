@@ -3,8 +3,8 @@ package xlsx
 import org.apache.poi.ss.usermodel.*
 import org.apache.poi.ss.util.CellRangeAddress
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
-import org.example.model.FormatName
-import org.example.spec.ReportGeneratorInterface
+import model.FormatName
+import spec.ReportGeneratorInterface
 import java.io.FileOutputStream
 
 class XLSXReportImpl : ReportGeneratorInterface {

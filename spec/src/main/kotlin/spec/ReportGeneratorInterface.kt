@@ -1,6 +1,6 @@
-package org.example.spec
+package spec
 
-import org.example.model.FormatName
+import model.FormatName
 import java.io.File
 import java.sql.ResultSet
 import java.sql.ResultSetMetaData
@@ -19,18 +19,18 @@ interface ReportGeneratorInterface {
         summary: String? = null
     )
 
-    fun generateReport(data: Map<String, List<String>>, destination: String, header: Boolean, title: String? = null, summary: String? = null, config: File){
-        val result = unpackConfig(config)
-        //data += result
-        //generateReport(data..) //bez config
-        //todo: generate report, config
-    }
-
-    //mozda calc
-    private fun unpackConfig(config: File){
-        //return map<String, list>
-        //todo: napraviti privatnu metodu koja raspakujue kofig file, vraca izracunatu kolonu
-    }
+//    fun generateReport(data: Map<String, List<String>>, destination: String, header: Boolean, title: String? = null, summary: String? = null, config: File){
+//        val result = unpackConfig(config)
+//        //data += result
+//        //generateReport(data..) //bez config
+//        //todo: generate report, config
+//    }
+//
+//    //mozda calc
+//    private fun unpackConfig(config: File){
+//        //return map<String, list>
+//        //todo: napraviti privatnu metodu koja raspakujue kofig file, vraca izracunatu kolonu
+//    }
 
     fun generateReport(data: ResultSet, destination: String, header: Boolean, title: String? = null, summary: String? = null){
         val preparedData = prepareData(data)

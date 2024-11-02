@@ -25,7 +25,7 @@ publishing{
             from(components["java"]) // If you're using the 'java' or 'kotlin' plugin
 
             groupId = "org.example"
-            artifactId = "report_spec"
+            artifactId = "spec"
             version = "1.0.0"
         }
     }

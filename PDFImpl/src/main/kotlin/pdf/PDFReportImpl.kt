@@ -1,7 +1,7 @@
 package pdf
 
-import org.example.model.FormatName
-import org.example.spec.ReportGeneratorInterface
+import model.FormatName
+import spec.ReportGeneratorInterface
 import java.io.FileOutputStream
 import com.lowagie.text.*
 import com.lowagie.text.pdf.PdfPCell

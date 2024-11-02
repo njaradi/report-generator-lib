@@ -11,7 +11,7 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":report_spec"))
+    implementation(project(":spec"))
     runtimeOnly(project(":CSVImpl"))
     runtimeOnly(project(":TXTImpl"))
     runtimeOnly(project(":PDFImpl"))
