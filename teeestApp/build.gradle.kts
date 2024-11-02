@@ -7,10 +7,17 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
-    testImplementation(kotlin("test"))
+    implementation(project(":report_spec"))
+    runtimeOnly(project(":CSVImpl"))
+    runtimeOnly(project(":TXTImpl"))
+    runtimeOnly(project(":PDFImpl"))
+    runtimeOnly(project(":XLSXImpl"))
+    //todo: za bazu dependensi
+    testImplementation("org.jetbrains.kotlin:kotlin-test")
 }
 
 tasks.test {
