@@ -6,14 +6,11 @@ import java.util.*
 
 fun main() {
     val serviceLoader = ServiceLoader.load(ReportGeneratorInterface::class.java)
-
     val exporterServices = mutableMapOf<FormatName, ReportGeneratorInterface> ()
 
-    serviceLoader.forEach{
-            service ->
+    serviceLoader.forEach{ service ->
         exporterServices[service.implName] = service
     }
-
     println(exporterServices.keys)
 
 //    val inputStream = object {}.javaClass.getResourceAsStream("/data.json")
@@ -25,7 +22,7 @@ fun main() {
         "Vegetables" to listOf("Carrot", "Broccoli", "Spinach"),
         "Grains" to listOf("Rice", "Wheat", "Oats")
     )
-    //println(data)
+    println(data)
 
     exporterServices[FormatName.TXT]?.generateReport(data, "izlazProba1.txt", true)
 

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="GradleMigrationSettings" migrationVersion="1" />
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
@@ -12,7 +11,7 @@
             <option value="$PROJECT_DIR$/PDFImpl" />
             <option value="$PROJECT_DIR$/TXTImpl" />
             <option value="$PROJECT_DIR$/XLSXImpl" />
-            <option value="$PROJECT_DIR$/report_spec" />
+            <option value="$PROJECT_DIR$/spec" />
             <option value="$PROJECT_DIR$/teeestApp" />
           </set>
         </option>

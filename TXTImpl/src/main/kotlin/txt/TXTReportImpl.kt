@@ -17,7 +17,6 @@ class TXTReportImpl : ReportGeneratorInterface {
     ) {
         val columns = data.keys.toList()
         val numRows = data.values.first().size
-
         // Calculate the max width for each column
         val columnWidths = columns.map { column ->
             val maxDataWidth = data[column]?.maxOfOrNull { it.length } ?: 0
