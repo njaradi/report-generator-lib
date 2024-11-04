@@ -24,6 +24,6 @@ fun main() {
     )
     println(data)
 
-    exporterServices[FormatName.TXT]?.generateReport(data, "izlazProba1.txt", true)
+    exporterServices[FormatName.TXT]?.generateReport(data, "izlazProba1.txt", true, "Stuff to eat", "Yep this is stuff to eat.")
 
 }
