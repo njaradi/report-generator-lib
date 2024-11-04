@@ -21,11 +21,12 @@ interface ReportGeneratorInterface {
 
 //    fun generateReport(data: Map<String, List<String>>, destination: String, header: Boolean, title: String? = null, summary: String? = null, config: File){
 //        val result = unpackConfig(config)
-//        //data += result
+//        *kalkulacije* -->result_calced (jedna kolona vrv)
+//        //data += result_calced
 //        //generateReport(data..) //bez config
 //        //todo: generate report, config
 //    }
-//
+
 //    //mozda calc
 //    private fun unpackConfig(config: File){
 //        //return map<String, list>
