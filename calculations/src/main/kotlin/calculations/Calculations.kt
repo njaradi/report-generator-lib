@@ -71,11 +71,22 @@ interface Calculations {
             else -> emptyList() // Return empty list for unsupported operators
         }
     }
-
+    /**
+     * Sums all the values from a list that can be filtered optionally
+     *
+     * @param data A list of strings that will be parsed into doubles
+     * @param condition An optional condition that will filter the list
+     */
     fun sum(data: List<String>, condition : String? = null){
         sum(castData(data))
     }
 
+    /**
+     * Sums all the values from a list that can be filtered optionally
+     *
+     * @param data A list of doubles
+     * @param condition An optional condition that will filter the list
+     */
     fun sum(data: List<Double>, condition: String? = null) : Double{
         var filteredData = data.toMutableList()
         if(condition != null){
@@ -89,10 +100,23 @@ interface Calculations {
         return result
     }
 
+    /**
+     * Returns the average of a list that can be filtered
+     *
+     * @param data A list of values that will be cast into Double
+     * @param condition An optional condition that will filter the list
+     */
     fun average(data: List<String>){
         average(castData(data))
-    }
+    }//todo: valjda ovde treba isto condition
 
+
+    /**
+     * Returns the average of a list that can be filtered
+     *
+     * @param data A list of values
+     * @param condition An optional condition that will filter the list
+     */
     fun average(data: List<Double>, condition: String? = null) : Double{
         var filteredData = data.toMutableList()
         if(condition != null){
@@ -105,8 +129,13 @@ interface Calculations {
         }
         return result/data.size
     }
-
-
+    // nije ovo dobro hahahah
+    /**
+     * Counts how many elements there are in a string list with or without a condition
+     *
+     * @param data A string list
+     * @param condition An optional condition that will filter the list
+     */
     fun count(data: List<String>, condition: String? = null) : Int{
         if(condition != null){
             if(condition.contains("contains") || condition.contains("equals"))
