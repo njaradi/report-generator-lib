@@ -13,25 +13,88 @@ interface Calculations {
         }
     }
 
+    private fun castData (data: List<List<String>>) : List<List<Double>>{
+        try{
+            return data.map { innerList ->
+                innerList.map { it.toDouble() }
+            }
+        }catch (e : Exception){
+            throw Exception("could not cast list list from String to Double")
+        }
+    }
+
+    private fun castData (data: List<List<Double>>) : List<List<String>>{
+        try{
+            return data.map { innerList ->
+                innerList.map { it.toString() }
+            }
+        }catch (e : Exception){
+            throw Exception("could not cast list list from Double to String")
+        }
+    }
+
+    private fun castData (data: List<Double>) : MutableList<String>{
+        try{
+            return data.map { it.toString() }.toMutableList()
+        }catch (e : Exception){
+            throw Exception("could not cast list from Double to String")
+        }
+    }
+
+
     //column
-    fun sub(){
-        //2 kolone
+
+    fun sub(minuend: List<String>, subtrahend: List<String>): List<String> {
+        val difference: List<Double> = sub(castData(minuend),castData(subtrahend))
+        return castData(difference).toList()
     }
 
-    fun multiply(){
-        //vise kolona
+    fun sub(minuend: List<Double>, subtrahend: List<Double>): List<Double> {
+        val difference: MutableList<Double> = minuend.toMutableList()
+        for(i in 0..minuend.size)
+        {
+             difference[i] = minuend[i]-subtrahend[i]
+        }
+        return difference.toList()
     }
 
-    fun divide(){
-        //2 kolone
+    fun multiply(multipliers: List<List<String>>) : List<String>{
+        return castData(multiply(castData(multipliers)))
     }
 
-//    fun sum(a: String) : Map<String, List<String>>
-//    {
-//        val result: Map<String, List<String>>
-//        //vise kolona - sabira sve kolone u 1
-//        return result
-//    }
+    fun multiply(multipliers: List<List<Double>>) : List<Double>{
+        val product = MutableList(multipliers[0].size) { 1.0 }
+        for ((i, multiplier) in multipliers.withIndex()) {
+            product[i] *= multiplier[i]
+        }
+        return product.toList()
+    }
+
+    fun divide(dividend: List<String>, divisor: List<String>): List<String> {
+        val quotient: List<Double> = divide(castData(dividend),castData(divisor))
+        return castData(quotient).toList()
+    }
+
+    fun divide(dividend: List<Double>, divisor: List<Double>): List<Double> {
+        val quotient: MutableList<Double> = dividend.toMutableList()
+        for(i in 0..dividend.size)
+        {
+            quotient[i] = dividend[i]/divisor[i]
+        }
+        return quotient.toList()
+    }
+
+    fun sum(addends: List<List<String>>) : List<String>{
+        return castData(sum(castData(addends)))
+    }
+
+    fun sum(addends: List<List<Double>>) : List<Double>{
+        val sum = MutableList(addends[0].size) { 0.0 }
+        for ((i, addend) in addends.withIndex()) {
+            sum[i] += addend[i]
+        }
+        return sum.toList()
+    }
 
 
     //summary

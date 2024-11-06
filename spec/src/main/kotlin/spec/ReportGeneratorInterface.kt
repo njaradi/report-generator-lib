@@ -22,6 +22,11 @@ interface ReportGeneratorInterface {
 //    fun generateReport(data: Map<String, List<String>>, destination: String, header: Boolean, title: String? = null, summary: String? = null, config: File){
 //        val result = unpackConfig(config)
 //        *kalkulacije* -->result_calced (jedna kolona vrv)
+//
+//        val konfig = "sum 1,2"
+//
+//        sub(data[1], data[2])
+//
 //        //data += result_calced
 //        //generateReport(data..) //bez config
 //        //todo: generate report, config
