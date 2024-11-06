@@ -4,8 +4,9 @@ import kotlin.collections.Map
 
 interface Calculations {
 
-    // todo napisati dokumentaciju
-    private fun castData (data: List<String>) : MutableList<Double>{
+    // todo: napisati dokumentaciju
+
+    private fun castStringToDouble (data: List<String>) : MutableList<Double>{
         try{
             return data.map { it.toDouble() }.toMutableList()
         }catch (e : Exception){
@@ -13,7 +14,7 @@ interface Calculations {
         }
     }
 
-    private fun castData (data: List<List<String>>) : List<List<Double>>{
+    private fun castNestedStringToDouble (data: List<List<String>>) : List<List<Double>>{
         try{
             return data.map { innerList ->
                 innerList.map { it.toDouble() }
@@ -23,7 +24,7 @@ interface Calculations {
         }
     }
 
-    private fun castData (data: List<List<Double>>) : List<List<String>>{
+    private fun castNestedDoubleToString (data: List<List<Double>>) : List<List<String>>{
         try{
             return data.map { innerList ->
                 innerList.map { it.toString() }
@@ -33,7 +34,7 @@ interface Calculations {
         }
     }
 
-    private fun castData (data: List<Double>) : MutableList<String>{
+    private fun castDoubleToSting (data: List<Double>) : MutableList<String>{
         try{
             return data.map { it.toString() }.toMutableList()
         }catch (e : Exception){
@@ -43,12 +44,25 @@ interface Calculations {
 
 
     //column
-
-    fun sub(minuend: List<String>, subtrahend: List<String>): List<String> {
-        val difference: List<Double> = sub(castData(minuend),castData(subtrahend))
-        return castData(difference).toList()
+    /**
+     * Subtracts values of string list from a string list, by taking each
+     * element and subtracting each other, finally it returns the resulting list
+     *
+     * @param minuend a list that represents the first element in a subtraction
+     * @param subtrahend a list that represents the second element in a subtraction
+     */
+    fun subString(minuend: List<String>, subtrahend: List<String>): List<String> {
+        val difference: List<Double> = sub(castStringToDouble(minuend),castStringToDouble(subtrahend))
+        return castDoubleToSting(difference).toList()
     }
 
+    /**
+     * Subtracts values of a list from a list, by taking each
+     * element and subtracting each other, finally it returns the resulting list
+     *
+     * @param minuend a list that represents the first element in a subtraction
+     * @param subtrahend a list that represents the second element in a subtraction
+     */
     fun sub(minuend: List<Double>, subtrahend: List<Double>): List<Double> {
         val difference: MutableList<Double> = minuend.toMutableList()
         for(i in 0..minuend.size)
@@ -58,10 +72,24 @@ interface Calculations {
         return difference.toList()
     }
 
-    fun multiply(multipliers: List<List<String>>) : List<String>{
-        return castData(multiply(castData(multipliers)))
+    /**
+     * Multiples values of multiple string lists with each other, by taking each
+     * element and multiplying with the equivalent elements of the other lists,
+     * finally it returns the resulting list
+     *
+     * @param multipliers a list of lists that will be multiplied with each other
+     */
+    fun multiplyString(multipliers: List<List<String>>) : List<String>{
+        return castDoubleToSting(multiply(castNestedStringToDouble(multipliers)))
     }
 
+    /**
+     * Multiples values of multiple lists with each other, by taking each
+     * element and multiplying with the equivalent elements of the other lists,
+     * finally it returns the resulting list
+     *
+     * @param multipliers a list that represents the first element in a subtraction
+     */
     fun multiply(multipliers: List<List<Double>>) : List<Double>{
         val product = MutableList(multipliers[0].size) { 1.0 }
         for ((i, multiplier) in multipliers.withIndex()) {
@@ -70,9 +98,9 @@ interface Calculations {
         return product.toList()
     }
 
-    fun divide(dividend: List<String>, divisor: List<String>): List<String> {
-        val quotient: List<Double> = divide(castData(dividend),castData(divisor))
-        return castData(quotient).toList()
+    fun divideString(dividend: List<String>, divisor: List<String>): List<String> {
+        val quotient: List<Double> = divide(castStringToDouble(dividend),castStringToDouble(divisor))
+        return castDoubleToSting(quotient).toList()
     }
 
     fun divide(dividend: List<Double>, divisor: List<Double>): List<Double> {
@@ -84,8 +112,8 @@ interface Calculations {
         return quotient.toList()
     }
 
-    fun sum(addends: List<List<String>>) : List<String>{
-        return castData(sum(castData(addends)))
+    fun sumString(addends: List<List<String>>) : List<String>{
+        return castDoubleToSting(sum(castNestedStringToDouble(addends)))
     }
 
     fun sum(addends: List<List<Double>>) : List<Double>{
@@ -118,7 +146,7 @@ interface Calculations {
         }
     }
 
-    private fun condition(data: List<String>, condition : String) : List<String>
+    private fun conditionString(data: List<String>, condition : String) : List<String>
     {
         // Split the condition into parts (operator and value)
         val parts = condition.split(" ", limit = 2)
@@ -140,8 +168,8 @@ interface Calculations {
      * @param data A list of strings that will be parsed into doubles
      * @param condition An optional condition that will filter the list
      */
-    fun sum(data: List<String>, condition : String? = null){
-        sum(castData(data))
+    fun sumString(data: List<String>, condition : String? = null){
+        sum(castStringToDouble(data))
     }
 
     /**
@@ -170,7 +198,7 @@ interface Calculations {
      * @param condition An optional condition that will filter the list
      */
     fun average(data: List<String>){
-        average(castData(data))
+        average(castStringToDouble(data))
     }//todo: valjda ovde treba isto condition
 
 
@@ -203,9 +231,9 @@ interface Calculations {
         if(condition != null){
             if(condition.contains("contains") || condition.contains("equals"))
             {
-                return condition(data,condition).size
+                return conditionString(data,condition).size
             }else{
-                return condition(castData(data), condition).size
+                return condition(castStringToDouble(data), condition).size
             }
         }
         return data.size
