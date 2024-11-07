@@ -2,7 +2,7 @@ package calculations
 
 import kotlin.collections.Map
 
-interface Calculations {
+class Calculations {
 
     // todo: napisati dokumentaciju
 

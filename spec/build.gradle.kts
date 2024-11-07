@@ -8,7 +8,7 @@ group = "org.example"
 version = "1.0-SNAPSHOT"
 
 repositories {
-
+    mavenLocal()
     mavenCentral()
 }
 
@@ -34,5 +34,5 @@ publishing{
 }
 
 kotlin {
-    jvmToolchain(20)
+    jvmToolchain(21)
 }

@@ -5,7 +5,7 @@ import java.io.File
 import java.sql.ResultSet
 import java.sql.ResultSetMetaData
 
-import org.example.Calculations
+import calculations.Calculations
 
 interface ReportGeneratorInterface {
     //TODO: the project
@@ -42,6 +42,8 @@ interface ReportGeneratorInterface {
 
     fun generateReport(data: ResultSet, destination: String, header: Boolean, title: String? = null, summary: String? = null){
         val preparedData = prepareData(data)
+        val calculations = Calculations()
+        val result = calculations.average(listOf(1.0, 2.0, 3.0, 4.0, 5.0))
         generateReport(preparedData, destination, header, title, summary)
     }
 
