@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    implementation("org.example:calculations:1.0.0")
+    implementation(project(":calculations"))
     testImplementation(kotlin("test"))
 }
 
