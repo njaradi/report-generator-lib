@@ -16,7 +16,7 @@ dependencies {
     runtimeOnly(project(":TXTImpl"))
     runtimeOnly(project(":PDFImpl"))
     runtimeOnly(project(":XLSXImpl"))
-    //todo: za bazu dependensi
+    runtimeOnly("com.mysql:mysql-connector-j:8.4.0")
     testImplementation("org.jetbrains.kotlin:kotlin-test")
 }
 
