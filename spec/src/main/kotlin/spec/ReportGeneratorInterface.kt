@@ -18,33 +18,60 @@ interface ReportGeneratorInterface {
         destination: String,
         header: Boolean,
         title: String? = null,
-        summary: String? = null
+        summary: String? = null,
+        config: File? = null
     )
 
-//    fun generateReport(data: Map<String, List<String>>, destination: String, header: Boolean, title: String? = null, summary: String? = null, config: File){
-//        val result = unpackConfig(config)
-//        *kalkulacije* -->result_calced (jedna kolona vrv)
-//
-//        val konfig = "sum 1,2"
-//
-//        sub(data[1], data[2])
-//
-//        //data += result_calced
-//        //generateReport(data..) //bez config
-//        //todo: generate report, config
-//    }
+    fun generateReport(
+        data: Map<String, List<String>>,
+        destination: String,
+        header: Boolean,
+        title: String? = null,
+        summary: String? = null,
+        config: File? = null,
+        calculate: Map<String, List<String>>? = null
+    )
+    {
+        //resolve calc
+        calculate?.let {
+            var calc: Calculations = Calculations()
+            calculate["sum"]?.let{
 
-//    //mozda calc
-//    private fun unpackConfig(config: File){
-//        //return map<String, list>
-//        //todo: napraviti privatnu metodu koja raspakujue kofig file, vraca izracunatu kolonu
-//    }
+            }
+            calculate["sub"]?.let{
 
-    fun generateReport(data: ResultSet, destination: String, header: Boolean, title: String? = null, summary: String? = null){
+            }
+            calculate["mul"]?.let{
+
+            }
+            calculate["div"]?.let{
+
+            }
+            calculate["avg"]?.let{
+
+            }
+        }
+        generateReport(data, destination, header, title, summary, config)
+    }
+
+    //mozda calc
+    private fun unpackConfig(config: File){
+        //return map<String, list>
+        //todo: napraviti privatnu metodu koja raspakujue kofig file, vraca izracunatu kolonu
+    }
+
+    fun generateReport(
+        data: ResultSet,
+        destination: String,
+        header: Boolean,
+        title: String? = null,
+        summary: String? = null,
+        config: File? = null,
+        calculate: Map<String, List<String>>? = null
+        )
+    {
         val preparedData = prepareData(data)
-        val calculations = Calculations()
-        val result = calculations.average(listOf(1.0, 2.0, 3.0, 4.0, 5.0))
-        generateReport(preparedData, destination, header, title, summary)
+        generateReport(preparedData, destination, header, title, summary, config, calculate)
     }
 
 

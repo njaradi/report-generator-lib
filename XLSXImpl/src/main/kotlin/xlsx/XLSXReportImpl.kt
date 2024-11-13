@@ -5,6 +5,7 @@ import org.apache.poi.ss.util.CellRangeAddress
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import model.FormatName
 import spec.ReportGeneratorInterface
+import java.io.File
 import java.io.FileOutputStream
 
 class XLSXReportImpl : ReportGeneratorInterface {
@@ -16,7 +17,8 @@ class XLSXReportImpl : ReportGeneratorInterface {
         destination: String,
         header: Boolean,
         title: String?,
-        summary: String?
+        summary: String?,
+        config: File?
     ) {
         // todo: popravi
         val workbook: Workbook = XSSFWorkbook()

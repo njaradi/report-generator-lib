@@ -13,7 +13,8 @@ class TXTReportImpl : ReportGeneratorInterface {
         destination: String,
         header: Boolean,
         title: String?,
-        summary: String?
+        summary: String?,
+        config: File?
     ) {
         val columns = data.keys.toList()
         val numRows = data.values.first().size

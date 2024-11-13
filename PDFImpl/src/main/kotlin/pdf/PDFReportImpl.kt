@@ -7,6 +7,7 @@ import com.lowagie.text.*
 import com.lowagie.text.pdf.PdfPCell
 import com.lowagie.text.pdf.PdfPTable
 import com.lowagie.text.pdf.PdfWriter
+import java.io.File
 
 class PDFReportImpl : ReportGeneratorInterface {
     override val implName: FormatName = FormatName.PDF
@@ -17,9 +18,9 @@ class PDFReportImpl : ReportGeneratorInterface {
         destination: String,
         header: Boolean,
         title: String?,
-        summary: String?
+        summary: String?,
+        config: File?
     ) { //todo: omoguciti korisniku da formatira kako hoce
-        //todo: 20 questions ui
 
         // Create a new document
         val document = Document()
@@ -33,6 +34,7 @@ class PDFReportImpl : ReportGeneratorInterface {
 
             // Add title if provided
             title?.let {
+                //fromat
                 val titleParagraph = Paragraph(it, FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18f))
                 titleParagraph.alignment = Element.ALIGN_CENTER
                 document.add(titleParagraph)

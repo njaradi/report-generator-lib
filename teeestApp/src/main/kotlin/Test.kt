@@ -44,5 +44,5 @@ fun main() {
 //    println(data)
 //
 //    exporterServices[FormatName.TXT]?.generateReport(data, "izlazProba1.txt", true, "Stuff to eat", "Yep this is stuff to eat.")
-    exporterServices[FormatName.TXT]?.generateReport(resultSet, "baza_izlazProba1.txt", true, "Student grades", "They did good")
+    exporterServices[FormatName.TXT]?.generateReport(resultSet, "baza_izlazProba1.txt", true, "[Student grades]", "They did good")
 }
