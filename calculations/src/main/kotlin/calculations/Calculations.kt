@@ -1,11 +1,14 @@
 package calculations
 
+//todo moze li ovo da se brise?
 import kotlin.collections.Map
 
+/**
+ * An interface for generating formatted or non-formatted reports from a map of column data to different formats.
+ *
+ * Implementations of this interface should define how the report is formatted and saved.
+ */
 class Calculations {
-
-    // todo: napisati dokumentaciju
-
     private fun castStringToDouble (data: List<String>) : MutableList<Double>{
         try{
             return data.map { it.toDouble() }.toMutableList()
@@ -23,6 +26,7 @@ class Calculations {
             throw Exception("could not cast list list from String to Double")
         }
     }
+
 
     private fun castNestedDoubleToString (data: List<List<Double>>) : List<List<String>>{
         try{
@@ -42,8 +46,6 @@ class Calculations {
         }
     }
 
-
-    //column
     /**
      * Subtracts values of string list from a string list, by taking each
      * element and subtracting each other, finally it returns the resulting list
@@ -73,22 +75,25 @@ class Calculations {
     }
 
     /**
-     * Multiples values of multiple string lists with each other, by taking each
-     * element and multiplying with the equivalent elements of the other lists,
-     * finally it returns the resulting list
+     * Multiplies elements in multiple nested lists of strings at corresponding indices.
      *
-     * @param multipliers a list of lists that will be multiplied with each other
+     * This function accepts a nested list of strings where each inner list contains numeric values as strings.
+     * It converts the strings to doubles, multiplies elements at corresponding indices across the lists,
+     * and returns the results as a list of strings.
+     *
+     * @param multipliers A nested list of strings, where each inner list contains numeric values represented as strings.
+     * @return A list of strings representing the product of the values at each index across the lists.
+     * @throws Exception if any string cannot be converted to a double.
      */
     fun multiplyString(multipliers: List<List<String>>) : List<String>{
         return castDoubleToSting(multiply(castNestedStringToDouble(multipliers)))
     }
 
     /**
-     * Multiples values of multiple lists with each other, by taking each
-     * element and multiplying with the equivalent elements of the other lists,
-     * finally it returns the resulting list
+     * Multiplies elements in multiple lists at corresponding indices.
      *
-     * @param multipliers a list that represents the first element in a subtraction
+     * @param multipliers A list of lists where each inner list contains doubles to multiply.
+     * @return A list of doubles where each element is the product of the values at the corresponding index in each list.
      */
     fun multiply(multipliers: List<List<Double>>) : List<Double>{
         val product = MutableList(multipliers[0].size) { 1.0 }
@@ -98,11 +103,33 @@ class Calculations {
         return product.toList()
     }
 
+    /**
+     * Divides elements of one list of strings by elements of another list of strings at corresponding indices.
+     *
+     * This function converts two lists of strings, `dividend` and `divisor`, into lists of doubles, performs
+     * element-wise division (dividend[i] / divisor[i]), and returns the result as a list of strings.
+     *
+     * @param dividend A list of strings representing numeric values to be divided.
+     * @param divisor A list of strings representing numeric values as divisors.
+     * @return A list of strings where each element is the quotient of the division of corresponding elements.
+     * @throws Exception if any string cannot be converted to a double or if division by zero occurs.
+     */
     fun divideString(dividend: List<String>, divisor: List<String>): List<String> {
         val quotient: List<Double> = divide(castStringToDouble(dividend),castStringToDouble(divisor))
         return castDoubleToSting(quotient).toList()
     }
 
+    /**
+     * Divides elements of one list by elements of another list at corresponding indices.
+     *
+     * This function takes two lists of doubles, `dividend` and `divisor`, and performs element-wise division
+     * (dividend[i] / divisor[i]). The result is returned as a list of doubles.
+     *
+     * @param dividend A list of doubles representing numeric values to be divided.
+     * @param divisor A list of doubles representing numeric values as divisors.
+     * @return A list of doubles where each element is the quotient of the division of corresponding elements.
+     * @throws ArithmeticException if division by zero occurs in any element.
+     */
     fun divide(dividend: List<Double>, divisor: List<Double>): List<Double> {
         val quotient: MutableList<Double> = dividend.toMutableList()
         for(i in dividend.indices)
@@ -112,10 +139,30 @@ class Calculations {
         return quotient.toList()
     }
 
+    /**
+     * Sums elements in multiple nested lists of strings at corresponding indices.
+     *
+     * This function accepts a nested list of strings, where each inner list contains numeric values represented as strings.
+     * It converts the strings to doubles, sums the elements at corresponding indices across the lists, and
+     * returns the result as a list of strings.
+     *
+     * @param addends A nested list of strings, where each inner list contains numeric values represented as strings.
+     * @return A list of strings representing the sum of the values at each index across the lists.
+     * @throws Exception if any string cannot be converted to a double.
+     */
     fun sumString(addends: List<List<String>>) : List<String>{
         return castDoubleToSting(sum(castNestedStringToDouble(addends)))
     }
 
+    /**
+     * Sums elements in multiple lists of doubles at corresponding indices.
+     *
+     * This function takes a nested list of doubles, where each inner list contains numeric values,
+     * and sums the elements at corresponding indices across the lists. The result is returned as a list of doubles.
+     *
+     * @param addends A nested list of doubles, where each inner list contains numeric values.
+     * @return A list of doubles representing the sum of the values at each index across the lists.
+     */
     fun sum(addends: List<List<Double>>) : List<Double>{
         val sum = MutableList(addends[0].size) { 0.0 }
         for ((i, addend) in addends.withIndex()) {
@@ -220,7 +267,6 @@ class Calculations {
         }
         return result/data.size
     }
-    // nije ovo dobro hahahah
     /**
      * Counts how many elements there are in a string list with or without a condition
      *

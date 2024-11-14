@@ -55,5 +55,5 @@ fun main() {
         )
     )
     //exporterServices[FormatName.PDF]?.generateReport(resultSet, "baza_izlazProba1.pdf", true, "[Student grades]", "{%&They&% (did) good}", config, calculate)
-    exporterServices[FormatName.TXT]?.generateReport(resultSet, "baza_izlazProba1_calc.txt", true, "[Student grades]", "{%&They&% (did) good}",null, calculate)
+    exporterServices[FormatName.PDF]?.generateReport(resultSet, "baza_izlazProba1_calc.pdf", true, "[Student grades]", "{%&They&% (did) good}",config, calculate)
 }

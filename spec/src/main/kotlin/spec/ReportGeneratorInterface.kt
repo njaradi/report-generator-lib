@@ -7,12 +7,28 @@ import java.sql.ResultSetMetaData
 
 import calculations.Calculations
 
+/**
+ * An interface for generating formatted or non-formatted reports from a map of column data to different formats.
+ *
+ * Implementations of this interface should define how the report is formatted and saved.
+ */
 interface ReportGeneratorInterface {
     //TODO: the project
 
     val implName: FormatName
     val extension: String
 
+    /**
+     * Generates a report based on the provided data and writes it to the specified destination.
+     *
+     * @param data A map where the key is the column name and the value is a list of strings representing the column data.
+     *             All lists in the map should have the same size to ensure proper row alignment.
+     * @param destination The file path where the report will be saved.
+     * @param header Indicates if header is provided in data
+     * @param title An optional title for the report, used only in the formatted reports.
+     * @param summary An optional summary for the report, used only in the formatted reports.
+     * @param config An optional configuration for the report, used only in the formatted reports.
+     */
     fun generateReport(
         data: Map<String, List<String>>,
         destination: String,
@@ -151,39 +167,39 @@ interface ReportGeneratorInterface {
         generateReport(combinedData, destination, header, title, updatedSummary, config)
     }
 
-        fun generateReport(
-            data: ResultSet,
-            destination: String,
-            header: Boolean,
-            title: String? = null,
-            summary: String? = null,
-            config: File? = null,
-            calculate: Map<String, List<List<String>>>? = null
-        ) {
-            val preparedData = prepareData(data)
-            generateReport(preparedData, destination, header, title, summary, config, calculate)
+    fun generateReport(
+        data: ResultSet,
+        destination: String,
+        header: Boolean,
+        title: String? = null,
+        summary: String? = null,
+        config: File? = null,
+        calculate: Map<String, List<List<String>>>? = null
+    ) {
+        val preparedData = prepareData(data)
+        generateReport(preparedData, destination, header, title, summary, config, calculate)
+    }
+
+
+
+    private fun prepareData(resultSet: ResultSet): Map<String, List<String>> {
+        val reportData = mutableMapOf<String, MutableList<String>>()
+
+        val metaData: ResultSetMetaData = resultSet.metaData
+        val columnCount = metaData.columnCount
+
+        for (i in 1..columnCount) {
+            val columnName = metaData.getColumnName(i)
+            reportData[columnName] = mutableListOf()
         }
 
-
-        /** */
-        private fun prepareData(resultSet: ResultSet): Map<String, List<String>> {
-            val reportData = mutableMapOf<String, MutableList<String>>()
-
-            val metaData: ResultSetMetaData = resultSet.metaData
-            val columnCount = metaData.columnCount
-
+        while (resultSet.next()) {
             for (i in 1..columnCount) {
                 val columnName = metaData.getColumnName(i)
-                reportData[columnName] = mutableListOf()
+                reportData[columnName]!!.add(resultSet.getString(i))
             }
-
-            while (resultSet.next()) {
-                for (i in 1..columnCount) {
-                    val columnName = metaData.getColumnName(i)
-                    reportData[columnName]!!.add(resultSet.getString(i))
-                }
-            }
-
-            return reportData
         }
+
+        return reportData
+    }
 }
