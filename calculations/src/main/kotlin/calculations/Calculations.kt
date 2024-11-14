@@ -4,9 +4,8 @@ package calculations
 import kotlin.collections.Map
 
 /**
- * An interface for generating formatted or non-formatted reports from a map of column data to different formats.
- *
- * Implementations of this interface should define how the report is formatted and saved.
+ * Library provides a set of utility functions designed to perform common mathematical and data processing
+ * operations on lists of numbers and string.
  */
 class Calculations {
     private fun castStringToDouble (data: List<String>) : MutableList<Double>{

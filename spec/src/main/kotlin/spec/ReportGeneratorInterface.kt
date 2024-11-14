@@ -39,8 +39,17 @@ interface ReportGeneratorInterface {
     )
 
     /**
-     * @param calculate Map<String, List<List<String>>> where key is a calculation name (e.g. sum,avg...) and
-     * List<List<String>> is a list of column names upon which the calculation is done (one calculation can be done on multiple lists of columns)
+     * Generates a report based on the provided data and writes it to the specified destination.
+     *
+     * @param data A map where the key is the column name and the value is a list of strings representing the column data.
+     *             All lists in the map should have the same size to ensure proper row alignment.
+     * @param destination The file path where the report will be saved.
+     * @param header Indicates if header is provided in data
+     * @param title An optional title for the report, used only in the formatted reports.
+     * @param summary An optional summary for the report, used only in the formatted reports.
+     * @param config An optional configuration for the report, used only in the formatted reports.
+     * @param calculate A map where key is a calculation name (e.g. sum,avg...) and
+     * value is a list of column names upon which the calculation is done (one calculation can be done on multiple lists of columns)
      */
     fun generateReport(
         data: Map<String, List<String>>,
@@ -167,6 +176,9 @@ interface ReportGeneratorInterface {
         generateReport(combinedData, destination, header, title, updatedSummary, config)
     }
 
+    /**
+     * Generates a report based on the provided data and writes it to the specified destination.
+     */
     fun generateReport(
         data: ResultSet,
         destination: String,
