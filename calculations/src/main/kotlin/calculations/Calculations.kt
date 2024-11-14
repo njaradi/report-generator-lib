@@ -168,8 +168,8 @@ class Calculations {
      * @param data A list of strings that will be parsed into doubles
      * @param condition An optional condition that will filter the list
      */
-    fun sumString(data: List<String>, condition : String? = null){
-        sum(castStringToDouble(data))
+    fun sumString(data: List<String>, condition : String? = null) : Double{
+        return sum(castStringToDouble(data))
     }
 
     /**
@@ -197,8 +197,8 @@ class Calculations {
      * @param data A list of values that will be cast into Double
      * @param condition An optional condition that will filter the list
      */
-    fun average(data: List<String>){
-        average(castStringToDouble(data))
+    fun average(data: List<String>, condition: String? = null): Double {
+        return average(castStringToDouble(data), condition)
     }//todo: valjda ovde treba isto condition
 
 

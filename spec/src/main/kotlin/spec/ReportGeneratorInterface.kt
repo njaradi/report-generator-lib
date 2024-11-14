@@ -22,6 +22,10 @@ interface ReportGeneratorInterface {
         config: File? = null
     )
 
+    /**
+     * @param calculate Map<String, List<List<String>>> where key is a calculation name (e.g. sum,avg...) and
+     * List<List<String>> is a list of column names upon which the calculation is done (one calculation can be done on multiple lists of columns)
+     */
     fun generateReport(
         data: Map<String, List<String>>,
         destination: String,
@@ -29,71 +33,157 @@ interface ReportGeneratorInterface {
         title: String? = null,
         summary: String? = null,
         config: File? = null,
-        calculate: Map<String, List<String>>? = null
-    )
-    {
+        calculate: Map<String, List<List<String>>>? = null
+    ) {
         //resolve calc
+        val calculations = Calculations()
+        val newData = mutableMapOf<String, List<String>>()
+        var updatedSummary : String = summary ?: ""
+        val combinedData = data.toMutableMap()
         calculate?.let {
-            var calc: Calculations = Calculations()
-            calculate["sum"]?.let{
+            calculate["sum"]?.let { sumList ->
+                for (calcItem in sumList) {
+                    // If calcItem has only one item, sum the single column
+                    if (calcItem.size == 1) {
+                        data[calcItem[0]]?.let { columnData ->
+                            // Calculate sum for a single column
+                            val result = calculations.sumString(columnData)
+                            //newData[calcItem[0]] = result todo videti kako da dodam u summary
+                            val key = "sum"+calcItem[0]
+                            updatedSummary += "\n$key: $result"
+                        }
+                    }
+                    // If calcItem has multiple items, create a list of columns and sum them
+                    else {
+                        val columnsData = calcItem.mapNotNull { columnName ->
+                            data[columnName]
+                        }
+                        if (columnsData.size == calcItem.size) { // Ensure all columns were found in data
+                            val result = calculations.sumString(columnsData)
+                            newData["sum_" + calcItem.joinToString("_")] = result
+                        }
+                    }
+                }
+            }
+            calculate["sub"]?.let { subList ->
+                for (calcItem in subList) {
+                    // Ensure calcItem has exactly two items for the minuend and subtrahend
+                    if (calcItem.size == 2) {
+                        val minuend = data[calcItem[0]]
+                        val subtrahend = data[calcItem[1]]
+
+                        if (minuend != null && subtrahend != null) {
+                            // Perform the subtraction using subString
+                            val result = calculations.subString(minuend, subtrahend)
+                            // Store the result in newData with a descriptive key
+                            newData["sub_${calcItem[0]}_${calcItem[1]}"] = result
+                        }
+                    }
+                }
+            }
+
+            calculate["mul"]?.let { mulList ->
+                for (calcItem in mulList) {
+                    val columnsData = calcItem.mapNotNull { columnName ->
+                        data[columnName]
+                    }
+                    if (columnsData.size == calcItem.size) { // Ensure all columns were found in data
+                        val result = calculations.sumString(columnsData)
+                        newData["sum_" + calcItem.joinToString("_")] = result
+                    }
+
+                }
+            }
+            calculate["div"]?.let { divList ->
+                for (calcItem in divList) {
+                    // Ensure calcItem has exactly two items for the minuend and subtrahend
+                    if (calcItem.size == 2) {
+                        val dividend = data[calcItem[0]]
+                        val divisor = data[calcItem[1]]
+
+                        if (dividend != null && divisor != null) {
+                            // Perform the subtraction using subString
+                            val result = calculations.divideString(dividend, divisor)
+                            // Store the result in newData with a descriptive key
+                            newData["sub_${calcItem[0]}_${calcItem[1]}"] = result
+                        }
+                    }
+                }
 
             }
-            calculate["sub"]?.let{
-
+            calculate["avg"]?.let {avgList ->
+                for (calcItem in avgList) {
+                    // Ensure calcItem has only one item for the column to average
+                    if (calcItem.size == 1) {
+                        data[calcItem[0]]?.let { columnData ->
+                            // Perform the average calculation using avgString
+                            val result = calculations.average(columnData)
+                            val key = "avg_${calcItem[0]}"
+                            updatedSummary += "\n$key: $result"
+                            //newData["avg_${calcItem[0]}"] = result todo videti kako u summary dodati average
+                        }
+                    }
+                }
             }
-            calculate["mul"]?.let{
-
+            calculate["cnt"]?.let { countList ->
+                for (calcItem in countList) {
+                    if (calcItem.size == 1) {
+                        data[calcItem[0]]?.let { columnData ->
+                            val result = calculations.count(columnData)
+                            val key = "cnt_${calcItem[0]}"
+                            updatedSummary += "\n$key: $result"
+                        }
+                    }
+                    else if (calcItem.size == 2){
+                        data[calcItem[0]]?.let { columnData ->
+                            val columnName = calcItem[0]
+                            val condition = calcItem[1]
+                            val result = calculations.count(columnData, condition)
+                            val key = "cnt_${columnName}_${condition}}"
+                            updatedSummary += "\n$key: $result"
+                        }
+                    }
+                }
             }
-            calculate["div"]?.let{
+            combinedData.putAll(newData)
 
-            }
-            calculate["avg"]?.let{
-
-            }
         }
-        generateReport(data, destination, header, title, summary, config)
+        generateReport(combinedData, destination, header, title, updatedSummary, config)
     }
 
-    //mozda calc
-    private fun unpackConfig(config: File){
-        //return map<String, list>
-        //todo: napraviti privatnu metodu koja raspakujue kofig file, vraca izracunatu kolonu
-    }
-
-    fun generateReport(
-        data: ResultSet,
-        destination: String,
-        header: Boolean,
-        title: String? = null,
-        summary: String? = null,
-        config: File? = null,
-        calculate: Map<String, List<String>>? = null
-        )
-    {
-        val preparedData = prepareData(data)
-        generateReport(preparedData, destination, header, title, summary, config, calculate)
-    }
-
-
-    /** */
-    private fun prepareData(resultSet: ResultSet): Map<String, List<String>> {
-        val reportData = mutableMapOf<String, MutableList<String>>()
-
-        val metaData: ResultSetMetaData = resultSet.metaData
-        val columnCount = metaData.columnCount
-
-        for (i in 1..columnCount) {
-            val columnName = metaData.getColumnName(i)
-            reportData[columnName] = mutableListOf()
+        fun generateReport(
+            data: ResultSet,
+            destination: String,
+            header: Boolean,
+            title: String? = null,
+            summary: String? = null,
+            config: File? = null,
+            calculate: Map<String, List<List<String>>>? = null
+        ) {
+            val preparedData = prepareData(data)
+            generateReport(preparedData, destination, header, title, summary, config, calculate)
         }
 
-        while (resultSet.next()) {
+
+        /** */
+        private fun prepareData(resultSet: ResultSet): Map<String, List<String>> {
+            val reportData = mutableMapOf<String, MutableList<String>>()
+
+            val metaData: ResultSetMetaData = resultSet.metaData
+            val columnCount = metaData.columnCount
+
             for (i in 1..columnCount) {
                 val columnName = metaData.getColumnName(i)
-                reportData[columnName]!!.add(resultSet.getString(i))
+                reportData[columnName] = mutableListOf()
             }
-        }
 
-        return reportData
-    }
+            while (resultSet.next()) {
+                for (i in 1..columnCount) {
+                    val columnName = metaData.getColumnName(i)
+                    reportData[columnName]!!.add(resultSet.getString(i))
+                }
+            }
+
+            return reportData
+        }
 }
