@@ -65,7 +65,7 @@ class Calculations {
      */
     fun sub(minuend: List<Double>, subtrahend: List<Double>): List<Double> {
         val difference: MutableList<Double> = minuend.toMutableList()
-        for(i in 0..minuend.size)
+        for(i in minuend.indices)
         {
              difference[i] = minuend[i]-subtrahend[i]
         }
@@ -105,7 +105,7 @@ class Calculations {
 
     fun divide(dividend: List<Double>, divisor: List<Double>): List<Double> {
         val quotient: MutableList<Double> = dividend.toMutableList()
-        for(i in 0..dividend.size)
+        for(i in dividend.indices)
         {
             quotient[i] = dividend[i]/divisor[i]
         }
@@ -169,7 +169,7 @@ class Calculations {
      * @param condition An optional condition that will filter the list
      */
     fun sumString(data: List<String>, condition : String? = null) : Double{
-        return sum(castStringToDouble(data))
+        return sum(castStringToDouble(data), condition)
     }
 
     /**
@@ -197,9 +197,9 @@ class Calculations {
      * @param data A list of values that will be cast into Double
      * @param condition An optional condition that will filter the list
      */
-    fun average(data: List<String>, condition: String? = null): Double {
+    fun averageString(data: List<String>, condition: String? = null): Double {
         return average(castStringToDouble(data), condition)
-    }//todo: valjda ovde treba isto condition
+    }
 
 
     /**

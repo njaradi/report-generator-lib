@@ -29,7 +29,7 @@ fun main() {
         exporterServices[service.implName] = service
     }
     println(exporterServices.keys)
-    val config: File = File("C:\\Users\\Ivana\\OneDrive\\Documents\\RAF\\5. semestar\\skr\\format.json")
+    val config: File = File("format.json")
 
 //    val data: Map<String, List<String>> = mapOf(
 //        "Fruits" to listOf("Apple", "Banana", "Orange"),
@@ -39,5 +39,21 @@ fun main() {
 //    println(data)
 //
 //    exporterServices[FormatName.TXT]?.generateReport(data, "izlazProba1.txt", true, "Stuff to eat", "Yep this is stuff to eat.")
-    exporterServices[FormatName.PDF]?.generateReport(resultSet, "baza_izlazProba1.pdf", true, "[Student grades]", "{%&They&% (did) good}", config)
+    val calculate = mapOf(
+        "sum" to listOf(
+            listOf("points")  // Sum of points across all records
+        ),
+        "avg" to listOf(
+            listOf("grade"),    // Average grade across all records
+            listOf("points")    // Average points across all records
+        ),
+        "cnt" to listOf(
+            listOf("grade", ">= 50"),       // Count of grades >= 50 (passing grades)
+        ),
+        "sub" to listOf(
+            listOf("points", "grade")  // Subtract grade from points (hypothetically)
+        )
+    )
+    //exporterServices[FormatName.PDF]?.generateReport(resultSet, "baza_izlazProba1.pdf", true, "[Student grades]", "{%&They&% (did) good}", config, calculate)
+    exporterServices[FormatName.TXT]?.generateReport(resultSet, "baza_izlazProba1_calc.txt", true, "[Student grades]", "{%&They&% (did) good}",null, calculate)
 }

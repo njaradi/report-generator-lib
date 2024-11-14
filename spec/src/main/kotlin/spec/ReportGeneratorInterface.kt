@@ -49,7 +49,7 @@ interface ReportGeneratorInterface {
                             // Calculate sum for a single column
                             val result = calculations.sumString(columnData)
                             //newData[calcItem[0]] = result todo videti kako da dodam u summary
-                            val key = "sum"+calcItem[0]
+                            val key = "sum_"+calcItem[0]
                             updatedSummary += "\n$key: $result"
                         }
                     }
@@ -89,7 +89,7 @@ interface ReportGeneratorInterface {
                     }
                     if (columnsData.size == calcItem.size) { // Ensure all columns were found in data
                         val result = calculations.sumString(columnsData)
-                        newData["sum_" + calcItem.joinToString("_")] = result
+                        newData["mul_" + calcItem.joinToString("_")] = result
                     }
 
                 }
@@ -117,7 +117,7 @@ interface ReportGeneratorInterface {
                     if (calcItem.size == 1) {
                         data[calcItem[0]]?.let { columnData ->
                             // Perform the average calculation using avgString
-                            val result = calculations.average(columnData)
+                            val result = calculations.averageString(columnData)
                             val key = "avg_${calcItem[0]}"
                             updatedSummary += "\n$key: $result"
                             //newData["avg_${calcItem[0]}"] = result todo videti kako u summary dodati average
@@ -139,7 +139,7 @@ interface ReportGeneratorInterface {
                             val columnName = calcItem[0]
                             val condition = calcItem[1]
                             val result = calculations.count(columnData, condition)
-                            val key = "cnt_${columnName}_${condition}}"
+                            val key = "cnt_${columnName}_${condition}"
                             updatedSummary += "\n$key: $result"
                         }
                     }
