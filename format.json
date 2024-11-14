@@ -1,8 +1,8 @@
 {
-	"[]":"20 bold",
-	"{}":"17 italic",
-	"**":"bold",
-	"****":"italic",
-	"%%":"underline",
-	"()":"pink"
+	"[":"45 bold",
+	"{":"17 italic",
+	"*":"bold",
+	"**":"italic",
+	"%&":"underline",
+	"(":"pink"
 }

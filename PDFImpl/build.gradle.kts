@@ -13,6 +13,7 @@ repositories {
 
 dependencies {
     implementation("com.github.librepdf:openpdf:1.3.29")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
     implementation(project(":spec"))
     testImplementation(kotlin("test"))
 }
