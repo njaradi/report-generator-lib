@@ -23,12 +23,11 @@ class PDFReportImpl : ReportGeneratorInterface {
         data: Map<String, List<String>>,
         destination: String,
         header: Boolean,
-        title: String?,// text that can be formated
-        summary: String?,// text that can be formated
-        config: File? //json file that has the formating
+        title: String?,
+        summary: String?,
+        config: File?
     ) {
         val formatRules = config?.let { loadFormatRules(it) }
-        println(formatRules)
         // Create a new document
         val document = Document()
 
@@ -44,11 +43,6 @@ class PDFReportImpl : ReportGeneratorInterface {
                 val formattedTitle = formatRules?.let { rules -> applyFormatting(it, rules) } ?: it
                 val titleReader = StringReader("<h1 style='text-align:center;'>$formattedTitle</h1><br>")
                 HTMLWorker(document).parse(titleReader)
-
-//                val titleParagraph = Paragraph(it, FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18f))
-//                titleParagraph.alignment = Element.ALIGN_CENTER
-//                document.add(titleParagraph)
-//                document.add(Chunk.NEWLINE)  // Add a new line after the title
             }
 
             // Create a table based on the number of columns in the data
@@ -82,10 +76,6 @@ class PDFReportImpl : ReportGeneratorInterface {
                 val formattedSummary = formatRules?.let { rules -> applyFormatting(it, rules) } ?: it
                 val summaryReader = StringReader("<p>$formattedSummary</p>")
                 HTMLWorker(document).parse(summaryReader)
-
-//                document.add(Chunk.NEWLINE)
-//                val summaryParagraph = Paragraph("Summary: $summary", FontFactory.getFont(FontFactory.HELVETICA_OBLIQUE))
-//                document.add(summaryParagraph)
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -98,7 +88,6 @@ class PDFReportImpl : ReportGeneratorInterface {
     private fun applyFormatting(text: String, rules: Map<String, String>): String {
         var formattedText = text
         rules.forEach { (tag, style) ->
-            println(tag)
             when {
                 "bold" in style -> formattedText = formattedText.replace(tag, "<b>").replace(mirrored(tag), "</b>")
                 "italic" in style -> formattedText = formattedText.replace(tag, "<i>").replace(mirrored(tag), "</i>")
@@ -112,7 +101,6 @@ class PDFReportImpl : ReportGeneratorInterface {
                 }
             }
         }
-        println(formattedText)
         return formattedText
     }
 
