@@ -5,7 +5,7 @@ import kotlin.collections.Map
 
 /**
  * Library provides a set of utility functions designed to perform common mathematical and data processing
- * operations on lists of numbers and string.
+ * operations on lists of numbers and strings.
  */
 class Calculations {
     private fun castStringToDouble (data: List<String>) : MutableList<Double>{
@@ -176,11 +176,10 @@ class Calculations {
     // = 5, >=5,
     private fun condition(data: List<Double>, condition : String) : List<Double>
     {
-        // Extract operator and threshold from condition
-        val operator = condition.takeWhile { !it.isDigit() && it != '.' && it != '-' }
-        val value : Double = condition.removePrefix(operator).toDoubleOrNull() ?: return emptyList()
+        val trimmedCondition = condition.trim()
+        val operator = trimmedCondition.takeWhile { !it.isDigit() && it != '.' && it != '-' }.trim()
+        val value : Double = trimmedCondition.removePrefix(operator).trim().toDoubleOrNull() ?: return emptyList()
 
-        // Filter the data based on the operator
         return when (operator) {
             ">" -> data.filter { it > value }
             ">=" -> data.filter { it >= value }

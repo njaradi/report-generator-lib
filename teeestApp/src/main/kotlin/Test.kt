@@ -46,7 +46,7 @@ fun selectFormat(): FormatName {
 }
 
 fun main() {
-
+/**/
     val serviceLoader = ServiceLoader.load(ReportGeneratorInterface::class.java)
     val exporterServices = mutableMapOf<FormatName, ReportGeneratorInterface> ()
 
@@ -98,13 +98,13 @@ fun main() {
             }
         }
 
-        println("Enter title for the report (or press Enter to skip):")
+        println("Enter title for the report or press Enter to skip (CSV format does not support title):")
         val title = readLine()?.takeIf { it.isNotEmpty() }
 
-        println("Enter summary for the report (or press Enter to skip):")
+        println("Enter summary for the report or press Enter to skip (CSV format does not support summary):")
         val summary = readLine()?.takeIf { it.isNotEmpty() }
 
-        println("Enter the path to a config file (or press Enter to skip):")
+        println("Enter the path to a config file or press Enter to skip(CSV and TXT formats do not support formating):")
         val configPath = readLine()
         val config = configPath?.takeIf { it.isNotEmpty() }?.let { File(it) }
 
@@ -120,46 +120,48 @@ fun main() {
         running = readLine()?.lowercase() == "yes"
     }
     println("Goodbye!")
+/**/
 /*
-//    val jdbcUrl = "jdbc:mysql://localhost:3306/skrskr_databes";
-//    val dbUser = "root"
-//    val dbPassword = ""
-//
-//    val conn = DriverManager
-//        .getConnection(jdbcUrl, dbUser, dbPassword)
-//    println(conn.isValid(0))
-//
-//    val stmt = conn.createStatement()
-//
-//    val resultSet = stmt.executeQuery(
-//        "SELECT grade_id, student_name, course_name, grade, points, date_recorded, comments" +
-//                "  FROM  student_grades"
-//    )
-//
-//    val serviceLoader = ServiceLoader.load(ReportGeneratorInterface::class.java)
-//    val exporterServices = mutableMapOf<FormatName, ReportGeneratorInterface> ()
-//
-//    serviceLoader.forEach{ service ->
-//        exporterServices[service.implName] = service
-//    }
-//    println(exporterServices.keys)
-//    val config: File = File("format.json")
-//
-//    val calculate = mapOf(
-//        "sum" to listOf(
-//            listOf("points")  // Sum of points across all records
-//        ),
-//        "avg" to listOf(
-//            listOf("grade"),    // Average grade across all records
-//            listOf("points")    // Average points across all records
-//        ),
-//        "cnt" to listOf(
-//            listOf("grade", ">= 50"),       // Count of grades >= 50 (passing grades)
-//        ),
-//        "sub" to listOf(
-//            listOf("points", "grade")  // Subtract grade from points (hypothetically)
-//        )
-//    )
-//    exporterServices[FormatName.PDF]?.generateReport(resultSet, "baza_izlazProba1_calc.pdf", true, "[Student grades]", "{%&They&% (did) good}",config, calculate)
+    val jdbcUrl = "jdbc:mysql://localhost:3306/skrskr_databes";
+    val dbUser = "root"
+    val dbPassword = ""
+
+    val conn = DriverManager
+        .getConnection(jdbcUrl, dbUser, dbPassword)
+    println(conn.isValid(0))
+
+    val stmt = conn.createStatement()
+
+    val resultSet = stmt.executeQuery(
+        "SELECT grade_id, student_name, course_name, grade, points" +
+                "  FROM  student_grades"
+    )
+
+    val serviceLoader = ServiceLoader.load(ReportGeneratorInterface::class.java)
+    val exporterServices = mutableMapOf<FormatName, ReportGeneratorInterface> ()
+
+    serviceLoader.forEach{ service ->
+        exporterServices[service.implName] = service
+    }
+    println(exporterServices.keys)
+    val config: File = File("format.json")
+
+    val calculate = mapOf(
+        "sum" to listOf(
+            listOf("points"), // Sum of points across all records
+            listOf("points", "grade")
+        ),
+        "avg" to listOf(
+            listOf("grade"),    // Average grade across all records
+            listOf("points")    // Average points across all records
+        ),
+        "cnt" to listOf(
+            listOf("grade", ">= 5"),       // Count of grades >= 5.0 (passing grades)
+        ),
+        "sub" to listOf(
+            listOf("points", "grade")  // Subtract grade from points (hypothetically)
+        )
+    )
+    exporterServices[FormatName.PDF]?.generateReport(resultSet, "NovaProba_calc.pdf", true, "[Student grades]", "{%&They&% (did) good}",config, calculate)
 */
 }
