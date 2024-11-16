@@ -30,7 +30,7 @@ kotlin {
 }
 
 application {
-    mainClass.set("teeestApp.TestKt")
+    mainClass.set("TestKt")
 }
 
 tasks.shadowJar {
