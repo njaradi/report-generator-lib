@@ -30,7 +30,7 @@ kotlin {
 }
 
 application {
-    mainClass.set("TestKt")
+    mainClass.set("TestKt")//dunj grana
 }
 
 tasks.shadowJar {
