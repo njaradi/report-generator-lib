@@ -1,5 +1,7 @@
 plugins {
     kotlin("jvm")
+    application
+    id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
 group = "org.example"
@@ -25,4 +27,20 @@ tasks.test {
 }
 kotlin {
     jvmToolchain(21)
+}
+
+application {
+    mainClass.set("teeestApp.TestKt")
+}
+
+tasks.shadowJar {
+    archiveClassifier.set("all")
+    manifest {
+        attributes["Main-Class"] = application.mainClass.get()
+    }
+    mergeServiceFiles() // include meta-inf services files
+}
+
+tasks.build {
+    dependsOn(tasks.shadowJar)
 }
